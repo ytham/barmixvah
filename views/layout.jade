@@ -1,7 +1,9 @@
 doctype html
-html
+html(ng-app)
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+
+    script(type='text/javascript', src='/bower_components/angular/angular.js')
   body
     block content

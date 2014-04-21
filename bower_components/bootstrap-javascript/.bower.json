@@ -1,0 +1,30 @@
+{
+  "name": "bootstrap-javascript",
+  "version": "3.0.2",
+  "main": "./bootstrap.js",
+  "dependencies": {
+    "jquery": ">=1.8.3 <2.1.0"
+  },
+  "readme": "ERROR: No README.md file found!",
+  "description": "ERROR: No README.md file found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alisamar/bootstrap-javascript.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "homepage": "https://github.com/alisamar/bootstrap-javascript",
+  "_release": "3.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.2",
+    "commit": "1a8acaafa2311f1a38e93dfbb02b291158fccf26"
+  },
+  "_source": "git://github.com/alisamar/bootstrap-javascript.git",
+  "_target": "~3.0.2",
+  "_originalSource": "bootstrap-javascript",
+  "_direct": true
+}
