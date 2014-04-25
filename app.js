@@ -6,7 +6,17 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+//var users = require('./routes/users');
+var add = require('./routes/add');
+
+var mongoose = require('mongoose');
+var db = mongoose.createConnection('localhost', 'bartagnan');
+
+var DrinkSchema = require('./models/Drink.js').DrinkSchema;
+var Drink = db.model('drinks', DrinkSchema);
+
+var PumpSchema = require('./models/Pump.js').PumpSchema;
+var Pump = db.model('pumps', PumpSchema);
 
 var app = express();
 
@@ -21,8 +31,12 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.get('/', routes.index(Drink, Pump));
+app.get('/add', add.form);
+//app.use('/users', users);
+
+//app.post('/drink.json', add.logDrink(Drink));
+app.post('/drink.json', add.addDrink(Drink));
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -30,6 +44,8 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+app.listen(3000);
 
 /// error handlers
 

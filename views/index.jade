@@ -1,5 +1,34 @@
 extends layout
 
+block head
+  link(rel='stylesheet', href='/libs/bootstrap-css/css/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/overrides.css')
+  script(type='text/javascript', src='/javascripts/controllers/DrinkController.js')
+  script(type='text/javascript', src='/javascripts/robot/frontend.js')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  div(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} )")
+    div#launcher
+      div#selectedDrink(style="background-image: url('/images/drinks/{{selectedDrink.image || \'no_image.jpg\'}}')") {{selectedDrink.name || "Select a Drink"}}
+      div#selectedSize Choose a Size
+        div#sizeSmall.drinkSize 40ml
+        div#sizeMedium.drinkSize 200ml
+        div#sizeLarge.drinkSize  500ml
+      div#make 
+        div#makeText MAKE
+        div#makeProgress
+    div#drinkScope.container-fluid
+      h1.title B'Artagnan
+      div.row
+        div.pumpContainer(ng-repeat="pump in pumps")
+          select.mixers(ng-model="pump", ng-options="i for i in ingredientsList")
+      div.drinkContainer(ng-repeat="drink in drinks", ng-click="selectDrink(drink)", style="background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
+        div.drinkName
+          | {{drink.name}}
+        div.hiddenIngredientFloat
+          ul
+            li.ingredientText(ng-repeat="ingredient in drink.ingredients")
+              | {{ingredient.name}} 
+
+block foot
+  script(type='text/javascript', src='/socket.io/socket.io.js')

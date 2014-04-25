@@ -1,0 +1,127 @@
+<!doctype html>
+<style>
+body {
+  font-family: "DejaVu Sans Mono";
+}
+
+th {
+  text-align: left;
+}
+
+canvas {
+  /*border: 1px solid;*/
+  float: right;
+}
+
+.flex {
+  /* basic styling */
+  width: calc(100%);
+  max-height: calc(100%);
+  border: 1px solid #555;
+  font: 14px Arial;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.flex > div {
+  flex: 1 1 auto;
+  width: 250px;
+}
+
+</style>
+
+<div class="flex">
+  <div>
+    <form id="ik-calculation">
+    <table>
+      <thead>
+        <tr>
+          <th>Part</th>
+          <th>Length (mm)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Coxa</td>
+          <td>
+            <input type="text" value="29" readonly data-group="lengths" id="coxa">
+          </td>
+        </tr>
+        <tr>
+          <td>Femur</td>
+          <td>
+            <input type="text" value="57" readonly data-group="lengths" id="femur">
+          </td>
+        </tr>
+        <tr>
+          <td>Tibia</td>
+          <td>
+            <input type="text" value="108" readonly data-group="lengths" id="tibia">
+          </td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Distance (mm)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>X</td>
+          <td>
+            <input type="range" min="0" max="30" step="1" value="0" data-group="positions" id="x" autofocus>
+          </td>
+        </tr>
+        <tr>
+          <td>Y</td>
+          <td>
+            <input type="range" min="-30" max="0" step="1"  value="0" data-group="positions" id="y">
+          </td>
+        </tr>
+
+        <tr>
+          <td>Z</td>
+          <td>
+            <input type="range" min="0" max="30" step="1"  value="0" data-group="positions" id="z">
+          </td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Angles</th>
+          <th>Degrees</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Coxa</td>
+          <td>
+            <input type="text" value="0" readonly data-group="angles" id="coxa">
+          </td>
+        </tr>
+        <tr>
+          <td>Femur</td>
+          <td>
+            <input type="text" value="0" readonly data-group="angles" id="femur">
+          </td>
+        </tr>
+        <tr>
+          <td>Tibia</td>
+          <td>
+            <input type="text" value="0" readonly data-group="angles" id="tibia">
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+    </form>
+  </div>
+  <div>
+    <canvas id="render" width="600" height="400"></canvas>
+  </div>
+
+</div>
+
+<script src="ik-calculation.js"></script>

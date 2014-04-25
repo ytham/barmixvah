@@ -1,0 +1,12 @@
+node_modules/
+lib/notes
+lib/*
+!lib/galileo.js
+!lib/pin.js
+fun
+push.sh
+watch.js
+*.py
+*.pyc
+*.pdf
+*.tgz

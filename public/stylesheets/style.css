@@ -1,8 +1,150 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
 a {
   color: #00B7FF;
 }
+
+.title {
+  font-size: 80px;
+  text-align: center;
+}
+
+#drinkScope {
+  margin-left: 280px;
+  padding: 0px 30px;
+}
+
+.pumpContainer {
+  display: inline-block;
+  margin: 4px;
+  width: 19%;
+  height: 50px;
+}
+
+.mixers {
+  background-color: transparent;
+  width: 100%;
+  height: 42px;
+  margin-left: 7px;
+  font: 20px "Myriad Set", Helvetica, Arial, sans-serif;
+  border: 2px solid #EEDDDD;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.drinkContainer {
+  display: inline-block;
+  height: 280px;
+  width: 30%;
+  margin: 15px;
+  background-color: #EEEEEE;
+  background-position: center;
+  background-size: cover;
+}
+
+.drinkName {
+  float: left;
+  width: 100%;
+  bottom: 0px;
+  color: #FFFFFF;
+  background-color: rgba(0,0,0,0.2);
+  padding: 10px;
+}
+
+.hiddenIngredientFloat {
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  padding-right: 20px;
+  padding-top: 10px;
+  background-color: rgba(0,0,0,0.2);
+}
+
+.ingredientText {
+  font-size: 0.5em;
+  list-style-type: none;
+  margin-left: -20px;
+  color: #EEEEEE;
+}
+
+
+/* Sidebar */
+#launcher {
+  display: inline-block;
+  position: fixed;
+  width: 280px;
+  text-align: left;
+  height: 100%;
+  background-color: #e74c3c;
+  padding: 10px;
+  z-index: 1;
+  color: #FFFFFF;
+  text-shadow: 3px 3px 6px #000000;
+}
+
+#selectedDrink {
+  height: 260px;
+  width: 260px;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 20px;
+  text-align: center;
+  background-color: #c0392b;
+}
+
+#selectedSize {
+  height: 130px;
+  width: 260px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.drinkSize {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  margin: 0px 2px;
+  font-size: 20px;
+  line-height: 80px;
+  vertical-align: middle;
+  background-color: #c0392b;
+}
+
+.disabled {
+  color: #CCCCCC !important;
+}
+
+#make {
+  display: inline-block;
+  background-color: #c0392b;
+  padding: 10px;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+}
+
+#makeProgress {
+  display: inline-block;
+  width: 300px;
+  height: 100px;
+  margin-left: -10px;
+  margin-top: -10px;
+  background-color: #888888;
+}
+
+#makeText {
+  display: inline-block;
+  margin-left: -20px;
+  width: 100%;
+  position: absolute;
+  z-index: 3;
+  text-align: center;
+  font-size: 80px;
+  color: #FFFFFF;
+}
+
+
+/* Add */
+
+.addForm {
+  width: 180px;
+}
+

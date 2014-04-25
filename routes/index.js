@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
-
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+exports.index = function (Drink, Pump) {
+  return function (req, res) {
+    Drink.find({}, function (err, drinks) {
+      Pump.find({}, function (err, pumps) {
+        res.render('index', { 
+          title: "B'Artagnan: The Automatic Bar Robot" ,
+          drinks: drinks,
+          pumps: pumps
+        });
+      }
+    });
+  };
+};
