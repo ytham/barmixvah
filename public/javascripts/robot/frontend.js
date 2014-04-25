@@ -5,34 +5,40 @@ $(document).ready(function () {
     $(this).hide();
   });
   resizeContainers();
-  //var socket = io.connect();
+  var socket = io.connect();
 
   // Sizing
   window.onresize = function () {
     resizeContainers();
   };
 
-  
-  
   var $scope = angular.element($('#drinkScope')).scope();
 
   $('#make').on('click', function () {
-    if ($('#make').hasClass('disabled') !== true) {
-      // Visual
-      console.log('Making Drink');
-      $('#make').addClass('disabled');
-      $('#makeProgress').show();
-      $('#makeProgress').animate({
-        'margin-left': '250px'
-      }, $scope.drinkSize, 'linear', function () {
-        $('#make').removeClass('disabled');
-        $('#makeProgress').hide();
-        $('#makeProgress').css('margin-left', '-10px');
-      });
-
-      // Start dispensing drink
-      makeDrink($scope.selectedDrink.ingredients, $scope.drinkSize);
+    console.log('click');
+    if ($('#make').hasClass('noselection') === true) {
+      alert('Please select a drink first.');
+      return;
     }
+
+    if ($('#make').hasClass('disabled') === true) {
+      return;
+    }
+
+    // Visual
+    console.log('Making Drink');
+    $('#make').addClass('disabled');
+    $('#makeProgress').show();
+    $('#makeProgress').animate({
+      'margin-left': '250px'
+    }, parseInt($scope.drinkTime), 'linear', function () {
+      $('#make').removeClass('disabled');
+      $('#makeProgress').hide();
+      $('#makeProgress').css('margin-left', '-10px');
+    });
+
+    // Start dispensing drink
+    makeDrink($scope.selectedDrink.ingredients, parseInt($scope.drinkTime));
   });
 
   $('.drinkContainer').mouseover(function () {
@@ -49,6 +55,12 @@ $(document).ready(function () {
 
   });
 
+  $('.drinkSize').click(function () {
+    $('.drinkSize').each(function () {
+      $(this).removeClass('selected');
+    });
+    $(this).addClass('selected');
+  });
 });
 
 function resizeContainers() {
@@ -93,5 +105,5 @@ function makeDrink(ingredients, drinkSize) {
 }
 
 function pump() {
-  
+
 }

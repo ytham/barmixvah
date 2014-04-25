@@ -4,11 +4,11 @@ exports.index = function (Drink, Pump) {
     Drink.find({}, function (err, drinks) {
       Pump.find({}, function (err, pumps) {
         res.render('index', { 
-          title: "B'Artagnan: The Automatic Bar Robot" ,
+          title: "Bar Mixvah: The Automatic Bartender Robot" ,
           drinks: drinks,
           pumps: pumps
         });
-      }
+      });
     });
   };
 };

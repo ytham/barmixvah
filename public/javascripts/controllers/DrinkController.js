@@ -1,4 +1,3 @@
-//angular.module('DrinkController', []).controller('DrinkController', function ($scope) {
 function DrinkController($scope, $http) {
   $scope.drinks = [];
   $scope.newDrink = {
@@ -9,16 +8,22 @@ function DrinkController($scope, $http) {
     ]
   };
 
-  $scope.pumps = {
-    pump1: '',
-    pump2: '',
-    pump3: '',
-    pump4: '',
-    pump5: ''
-  }
+  $scope.pumps = [
+    { label: 'pump0', ingredient: '' },
+    { label: 'pump1', ingredient: '' },
+    { label: 'pump2', ingredient: '' },
+    { label: 'pump3', ingredient: '' },
+    { label: 'pump4', ingredient: '' }
+  ];
+
+  $scope.sizes = [
+    { size: '40', time: '2000' },
+    { size: '200', time: '10000' },
+    { size: '500', time: '25000' }
+  ];
 
   $scope.selectedDrink;
-  $scope.drinkSize = 5000;
+  $scope.drinkTime = 5000;
 
   $scope.ingredientsList = [
     'Vodka', 'Rum', 'Whiskey', 'Tequila', 'Gin', 'Sake', 'Soju',
@@ -32,7 +37,20 @@ function DrinkController($scope, $http) {
   };
 
   $scope.setPumps = function (pumps) {
+    console.log(pumps);
     $scope.pumps = pumps;
+  }
+
+  $scope.savePumpValue = function (pumpNumber) {
+    var pumpName = "pump" + String(pumpNumber);
+    var pumpData = { 
+      label: pumpName, 
+      ingredient: $scope.pumps[pumpNumber].ingredient
+    };
+    console.log(pumpData);
+    $http.post('/pump.json', pumpData).success(function (data) {
+      console.log(data);
+    });
   }
 
   $scope.selectDrink = function (drink) {
@@ -41,23 +59,29 @@ function DrinkController($scope, $http) {
   };
 
   $scope.selectSize = function (size) {
-
+    for (var i in $scope.sizes) {
+      if ($scope.sizes[i].size === size) {
+        $scope.drinkTime = $scope.sizes[i].time;
+        console.log($scope.drinkTime);
+        return;
+      }
+    }
+    $scope.drinkTime = 5000;
   }
 
   $scope.addNewDrink = function () {
     $http.post('/drink.json', $scope.newDrink).success(function (data) {
-      console.log(data);
+      console.log(data.drink);
+      console.log($scope);
       if (data.drink) {
         $scope.drinks.push(data.drink);
-        $scope.newDrink.name = '';
-        $scope.newDrink.image = '';
-        // $scope.newDrink = {
-        //   name: '',
-        //   image: '',
-        //   ingredients: [
-        //     { name: '', amount: 0 }
-        //   ]
-        // };
+        $scope.newDrink = {
+          name: '',
+          image: '',
+          ingredients: [
+            { name: '', amount: 0 }
+          ]
+        };
       } else {
         alert(JSON.stringify(data));
       }

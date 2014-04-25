@@ -32,12 +32,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index(Drink, Pump));
-app.get('/add', add.form);
+app.get('/add', add.form(Drink));
 //app.use('/users', users);
 
 //app.post('/drink.json', add.logDrink(Drink));
 app.post('/drink.json', add.addDrink(Drink));
-
+app.post('/pump.json', add.addPump(Pump));
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -45,7 +45,8 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-app.listen(3000);
+var server = app.listen(3000, '0.0.0.0');
+var io = require('socket.io').listen(server);
 
 /// error handlers
 

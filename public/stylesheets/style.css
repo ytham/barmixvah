@@ -112,6 +112,14 @@ a {
   color: #CCCCCC !important;
 }
 
+.noselection {
+  background-color: #888888 !important;
+}
+
+.selected {
+  background-color: #FFDDDD !important;
+}
+
 #make {
   display: inline-block;
   background-color: #c0392b;

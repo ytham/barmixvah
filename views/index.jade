@@ -7,21 +7,21 @@ block head
   script(type='text/javascript', src='/javascripts/robot/frontend.js')
 
 block content
-  div(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} )")
+  div(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} ); setPumps( #{JSON.stringify(pumps)} )")
     div#launcher
       div#selectedDrink(style="background-image: url('/images/drinks/{{selectedDrink.image || \'no_image.jpg\'}}')") {{selectedDrink.name || "Select a Drink"}}
       div#selectedSize Choose a Size
-        div#sizeSmall.drinkSize 40ml
-        div#sizeMedium.drinkSize 200ml
-        div#sizeLarge.drinkSize  500ml
-      div#make 
+        div#sizeSmall.drinkSize(ng-click="selectSize('40')") 40ml
+        div#sizeMedium.drinkSize(ng-click="selectSize('200')") 200ml
+        div#sizeLarge.drinkSize(ng-click="selectSize('500')")  500ml
+      div#make(class="{{selectedDrink.name ? '' : 'noselection'}}")
         div#makeText MAKE
         div#makeProgress
     div#drinkScope.container-fluid
-      h1.title B'Artagnan
+      h1.title Bar Mixvah
       div.row
         div.pumpContainer(ng-repeat="pump in pumps")
-          select.mixers(ng-model="pump", ng-options="i for i in ingredientsList")
+          select.mixers(ng-change="savePumpValue($index)", ng-model="pump.ingredient", ng-options="i for i in ingredientsList")
       div.drinkContainer(ng-repeat="drink in drinks", ng-click="selectDrink(drink)", style="background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
         div.drinkName
           | {{drink.name}}

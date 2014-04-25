@@ -7,7 +7,7 @@ block head
   script(type='text/javascript', src='/javascripts/controllers/IngredientsController.js')
 
 block content
-  div.row(ng-controller="DrinkController", ng-init="setDrinks(#{JSON.stringify(drinks)})")
+  div#addScope.row(ng-controller="DrinkController", ng-init="setDrinks(#{JSON.stringify(drinks)})")
     div.col-md-2
     div.col-md-8
       h1.title Add New Drink
@@ -18,7 +18,7 @@ block content
           div.col-md-5
             input(ng-model="newDrink.name", placeholder="Name")
         div.row
-          div.col-md-3 Image Link
+          div.col-md-3 Filename
           div.col-md-5
             input(ng-model="newDrink.image", placeholder="Relative Link URL")
         div.row
@@ -34,5 +34,5 @@ block content
             div.col-md-3
               input.addForm.ingredient(ng-model="ingredient.amount", placeholder='0')
             div.col-md-1
-              a(ng-click="removeIngredient()") -
+              a(ng-click="removeIngredient($index)") -
         button.btn Add Drink
