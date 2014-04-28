@@ -34,10 +34,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', routes.index(Drink, Pump));
 app.get('/add', add.form(Drink));
 //app.use('/users', users);
+app.post('/updatepump.json', routes.updatePump(Pump));
 
-//app.post('/drink.json', add.logDrink(Drink));
 app.post('/drink.json', add.addDrink(Drink));
 app.post('/pump.json', add.addPump(Pump));
+
+//app.put('/pump.json', routes.updatePump(Pump));
+
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

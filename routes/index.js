@@ -12,3 +12,13 @@ exports.index = function (Drink, Pump) {
     });
   };
 };
+
+exports.updatePump = function (Pump) {
+  return function (req, res) {
+    console.log(req.body);
+    Pump.findOneAndUpdate({ label: req.body.label }, { ingredient: req.body.ingredient }, function (err, pump) {
+      console.log(pump);
+      res.send(pump);
+    });
+  }
+}

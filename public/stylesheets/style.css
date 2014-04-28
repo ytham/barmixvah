@@ -20,12 +20,13 @@ a {
 }
 
 .mixers {
-  background-color: transparent;
+  background-color: #FFDDDD;
   width: 100%;
   height: 42px;
   margin-left: 7px;
   font: 20px "Myriad Set", Helvetica, Arial, sans-serif;
-  border: 2px solid #EEDDDD;
+  padding-left: 20px;
+  border: 2px solid #e74c3c;
   border-radius: 0;
   -webkit-appearance: none;
 }

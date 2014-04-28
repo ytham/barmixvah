@@ -41,15 +41,25 @@ function DrinkController($scope, $http) {
     $scope.pumps = pumps;
   }
 
+  $scope.getPumps = function () {
+    $http.get('/pumps.json').success(function (data) {
+      console.log(data);
+      return data;
+    });
+  }
+
   $scope.savePumpValue = function (pumpNumber) {
     var pumpName = "pump" + String(pumpNumber);
     var pumpData = { 
       label: pumpName, 
       ingredient: $scope.pumps[pumpNumber].ingredient
     };
-    console.log(pumpData);
-    $http.post('/pump.json', pumpData).success(function (data) {
+
+    $http.post('/updatepump.json', pumpData).success(function (data) {
       console.log(data);
+      if (data) {
+        $scope.pump[pumpNumber] = data;
+      }
     });
   }
 
@@ -66,7 +76,6 @@ function DrinkController($scope, $http) {
         return;
       }
     }
-    $scope.drinkTime = 5000;
   }
 
   $scope.addNewDrink = function () {
