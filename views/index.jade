@@ -3,6 +3,7 @@ extends layout
 block head
   link(rel='stylesheet', href='/libs/bootstrap-css/css/bootstrap.css')
   link(rel='stylesheet', href='/stylesheets/overrides.css')
+  script(type='text/javascript', src='/socket.io/socket.io.js')
   script(type='text/javascript', src='/javascripts/controllers/DrinkController.js')
   script(type='text/javascript', src='/javascripts/robot/frontend.js')
 
@@ -20,15 +21,19 @@ block content
     div#drinkScope.container-fluid
       h1.title Bar Mixvah
       div.row
-        div.pumpContainer(ng-repeat="pump in pumps")
+        div.floatingPumpButtons
+          div#allPumps.pumpButton All
+          div.pumpButton(ng-click="addPump()") +
+          div.pumpButton(ng-click="removePump()") -
+        div.pumpContainer(ng-repeat="pump in pumps.ingredients")
           select.mixers(ng-change="savePumpValue($index)", ng-model="pump.ingredient", ng-options="i for i in ingredientsList")
-      div.drinkContainer(ng-repeat="drink in drinks", ng-click="selectDrink(drink)", style="background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
+      div.drinkContainer(ng-repeat="drink in drinks | orderBy: 'name' | filter: containsIngredients", ng-click="selectDrink(drink)", style="opacity: 1.0; background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
         div.drinkName
           | {{drink.name}}
-        div.hiddenIngredientFloat
+        div.hiddenIngredientFloat(style="display: none")
           ul
             li.ingredientText(ng-repeat="ingredient in drink.ingredients")
               | {{ingredient.name}} 
 
 block foot
-  script(type='text/javascript', src='/socket.io/socket.io.js')
+  

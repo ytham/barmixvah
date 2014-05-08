@@ -1,0 +1,36 @@
+extends layout
+
+block head
+  link(rel='stylesheet', href='/libs/bootstrap-css/css/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/overrides.css')
+  script(type='text/javascript', src='/socket.io/socket.io.js')
+  script(type='text/javascript', src='/javascripts/controllers/DrinkController.js')
+  script(type='text/javascript', src='/javascripts/robot/frontend.js')
+
+block content
+  div.container-fluid(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} )")
+    div.row
+      div.col-md-2
+      div.col-md-8
+        h1.title Edit Drinks
+    div.row
+      div.col-md-3 Name
+      div.col-md-3 Filename
+      div.col-md-1
+      div.col-md-5 Ingredients
+    div.row.editRow(ng-repeat="drink in drinks | orderBy: 'name'")
+      form(ng-submit="editDrink(drink)")
+        div.col-md-3 
+          input(value="{{drink.name}}", ng-model="drink.name")
+        div.col-md-3
+          input(value="{{drink.image}}", ng-model="drink.image")
+        div.col-md-1.text-right +
+        div.col-md-4
+          div.row(ng-repeat="ingredient in drink.ingredients")
+            div.col-md-7
+              select.mixers(value="{{ingredient.name}}", ng-model="ingredient.name", ng-options="i for i in ingredientsList")
+            div.col-md-4
+              input.addForm.ingredient(value="{{ingredient.amount}}", ng-model="ingredient.amount", style="width: 100px;")
+            div.col-md-1 -
+        div.col-md-1
+          button.btn Save

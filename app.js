@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 //var users = require('./routes/users');
 var add = require('./routes/add');
+var edit = require('./routes/edit');
 
 var mongoose = require('mongoose');
 var db = mongoose.createConnection('localhost', 'bartagnan');
@@ -17,6 +18,8 @@ var Drink = db.model('drinks', DrinkSchema);
 
 var PumpSchema = require('./models/Pump.js').PumpSchema;
 var Pump = db.model('pumps', PumpSchema);
+
+var robot = require('./public/javascripts/robot/backend.js');
 
 var app = express();
 
@@ -33,11 +36,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index(Drink, Pump));
 app.get('/add', add.form(Drink));
+app.get('/edit', edit.show(Drink));
 //app.use('/users', users);
 app.post('/updatepump.json', routes.updatePump(Pump));
 
 app.post('/drink.json', add.addDrink(Drink));
 app.post('/pump.json', add.addPump(Pump));
+app.post('/updatedrink.json', edit.updateDrink(Drink));
 
 //app.put('/pump.json', routes.updatePump(Pump));
 
@@ -50,6 +55,21 @@ app.use(function(req, res, next) {
 
 var server = app.listen(3000, '0.0.0.0');
 var io = require('socket.io').listen(server);
+
+io.sockets.on('connection', function (socket) {
+  socket.on("Pump Cycle", function (ingredients) {
+    robot.pump(ingredients);
+    //console.log(ingredients);
+  });
+
+  socket.on("Start All Pumps", function () {
+    robot.startAllPumps();
+  });
+
+  socket.on("Stop All Pumps", function () {
+    robot.stopAllPumps();
+  });
+});
 
 /// error handlers
 

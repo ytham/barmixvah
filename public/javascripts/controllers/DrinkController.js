@@ -8,13 +8,20 @@ function DrinkController($scope, $http) {
     ]
   };
 
-  $scope.pumps = [
-    { label: 'pump0', ingredient: '' },
-    { label: 'pump1', ingredient: '' },
-    { label: 'pump2', ingredient: '' },
-    { label: 'pump3', ingredient: '' },
-    { label: 'pump4', ingredient: '' }
-  ];
+  // $scope.pumps = [
+  //   { label: 'pump0', ingredient: '' },
+  //   { label: 'pump1', ingredient: '' },
+  //   { label: 'pump2', ingredient: '' },
+  //   { label: 'pump3', ingredient: '' },
+  //   { label: 'pump4', ingredient: '' }
+  // ];
+
+  $scope.pumps = {
+    label: "pumps",
+    ingredients: [
+      { label: "pump0", ingredient: "" }
+    ]
+  };
 
   $scope.sizes = [
     { size: '40', time: '2000' },
@@ -29,7 +36,8 @@ function DrinkController($scope, $http) {
     'Vodka', 'Rum', 'Whiskey', 'Tequila', 'Gin', 'Sake', 'Soju',
     'Orange Juice', 'Apple Juice', 'Cranberry Juice', 'Pineapple Juice', 'Mango Juice',
     'Coke', 'Sprite', 'Ginger Ale', 'Root Beer', 'Dr. Pepper',
-    'Blue Liqueur', 'Sweet & Sour', 'Triple Sec', 'Kaluha', 'Peach Schnapps', 'Midori Melon'
+    'Blue Liqueur', 'Sweet & Sour', 'Triple Sec', 'Kaluha', 'Peach Schnapps', 'Midori Melon',
+    'Champagne'
   ];
 
   $scope.setDrinks = function (drinks) {
@@ -38,7 +46,7 @@ function DrinkController($scope, $http) {
 
   $scope.setPumps = function (pumps) {
     console.log(pumps);
-    $scope.pumps = pumps;
+    $scope.pumps = pumps[0];
   }
 
   $scope.getPumps = function () {
@@ -48,17 +56,49 @@ function DrinkController($scope, $http) {
     });
   }
 
+  $scope.addPump = function () {
+    var index = 0;
+    if (typeof $scope.pumps.label === 'undefined') {
+      $scope.pumps = {
+        label: "pumps",
+        ingredients: [ { label: "pump0", ingredient: "" } ]
+      }
+    } else {
+      index = $scope.pumps.ingredients.length;
+      $scope.pumps.ingredients.push({ label: "pump" + String(index), ingredient: "" });
+    }
+
+    $http.post('/updatepump.json', $scope.pumps).success(function (data) {
+      console.log("addPump Update Success");
+      console.log($scope.pumps);
+    });
+  }
+
+  $scope.removePump = function () {
+    $scope.pumps.ingredients.pop();
+    $http.post('/updatepump.json', $scope.pumps).success(function (data) {
+      console.log("removePump Update Success");
+    });
+  }
+
   $scope.savePumpValue = function (pumpNumber) {
     var pumpName = "pump" + String(pumpNumber);
     var pumpData = { 
-      label: pumpName, 
-      ingredient: $scope.pumps[pumpNumber].ingredient
+      label: pumpName,
+      ingredient: $scope.pumps.ingredients[pumpNumber]
     };
+    console.log('savePumpValue');
+    console.log(pumpNumber);
+    console.log($scope.pumps);
 
-    $http.post('/updatepump.json', pumpData).success(function (data) {
+    $http.post('/updatepump.json', $scope.pumps).success(function (data) {
+      console.log("Success");
       console.log(data);
       if (data) {
-        $scope.pump[pumpNumber] = data;
+        //$scope.pumps.ingredients[pumpNumber] = data.ingredients[pumpNumber];
+        console.log($scope.pumps)
+        console.log('----');
+        console.log(data);
       }
     });
   }
@@ -105,5 +145,43 @@ function DrinkController($scope, $http) {
   $scope.removeIngredient = function (index) { 
     $scope.newDrink.ingredients.splice(index, 1);
     console.log('Removed ingredient at index ' + index);
+  }
+
+  $scope.containsIngredients = function (drink) {
+    var numIngredients = drink.ingredients.length;
+    var numPumps = $scope.pumps.ingredients.length;
+    var ingredientsContained = 0;
+    for (var i = 0; i < numIngredients; i++) {
+      for (var j = 0; j < numPumps; j++) {
+        if (drink.ingredients[i].name === $scope.pumps.ingredients[j].ingredient) {
+          ingredientsContained++;
+          if (ingredientsContained >= numIngredients || ingredientsContained >= numPumps) {
+            return true;
+          }
+          continue;
+        }
+      }
+    }
+    return false;
+  }
+
+  $scope.checkDuplicates = function () {
+    var len = $scope.pumps.ingredients.length;
+    for (var i = 0; i < len; i++) {
+      for (var j = i+1; j < len; j++) {
+        if ($scope.pumps.ingredients[i].ingredient === $scope.pumps.ingredients[j].ingredient) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  $scope.editDrink = function (drink) {
+    console.log(drink);
+    $http.post('/drink.json', drink).success(function (data) {
+      console.log("Success");
+      console.log(data);
+    });
   }
 }
