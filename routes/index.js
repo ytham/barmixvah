@@ -14,35 +14,20 @@ exports.index = function (Drink, Pump) {
 };
 
 exports.updatePump = function (Pump) {
-  console.log("Pump");
-  console.log(Pump);
   return function (req, res) {
-    console.log("req.body");
-    console.log(req.body);
-    Pump.remove(function (err) {
-      console.log('Collection removed');
-    });
-    //Pump.findOneAndUpdate({}, req.body, function (err, pump) {
-    Pump.create(req.body, function (err, pump) {
-      console.log(pump);
-      console.log('====');
-      console.log(err);
-      // if (pump == null) {
-      //   console.log('this ran');
-      //   var m = Pump.create(req.body);
-      //   console.log(m);
-      // }
-      res.send(pump);
+    Pump.findOneAndUpdate({ _id: req.body._id }, 
+      {
+        ingredients: req.body.ingredients
+      },
+      function (err, pump) {
+        console.log(pump);
+        console.log('====');
+        console.log(err);
+        if (pump == null) {
+          Pump.create(req.body);
+          pump = req.body;
+        }
+        res.send(pump);
     });
   }
 }
-
-// exports.updateAllPumps = function (Pump) {
-//   return function (req, res) {
-//     console.log(req.body);
-//     var pumps = req.body;
-//     for (var i = 0; i < pumps.length; i++) {
-//       Pump.findOneAndUpdate({ label: req.body.label });
-//     }
-//   }
-// }

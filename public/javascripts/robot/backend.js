@@ -4,7 +4,8 @@ var board, pump0, pump1, pump2, pump3, pump4;
 
 board = new five.Board();
 board.on('ready', function () {
-  // Counting down because that's the orientation that my Arduino happens to be in
+  // Counting down pins because that's the orientation 
+  // that my Arduino happens to be in
   pump0 = new five.Led(7);
   pump1 = new five.Led(6);
   pump2 = new five.Led(5);
@@ -21,11 +22,11 @@ board.on('ready', function () {
 });
 
 exports.pump = function (ingredients) {
-  console.log("Pump");
-  console.log(ingredients);
   for (var i in ingredients) {
-    console.log(ingredients[i].pump);
-    pumpMilliseconds(usePump(ingredients[i].pump), ingredients[i].amount);
+    setTimeout(function () {  // Delay used to have a top-based mix
+      console.log(ingredients[i].pump);
+      pumpMilliseconds(exports.usePump(ingredients[i].pump), ingredients[i].amount);
+    }, ingredients[i].delay);
   }
 };
 
@@ -46,21 +47,21 @@ exports.stopAllPumps = function () {
 }
 
 function pumpMilliseconds(pump, ms) {
-  startPump(pump);
+  exports.startPump(pump);
   setTimeout(function () {
-    stopPump(pump);
+    exports.stopPump(pump);
   }, ms);
 }
 
-function startPump(pump) {
+exports.startPump = function (pump) {
   pump.on();
 }
 
-function stopPump(pump) {
+exports.stopPump = function (pump) {
   pump.off();
 }
 
-function usePump(pump) {
+exports.usePump = function (pump) {
   var using;
   switch(pump) {
     case 'pump0':

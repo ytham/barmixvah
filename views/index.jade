@@ -22,7 +22,10 @@ block content
       h1.title Bar Mixvah
       div.row
         div.floatingPumpButtons
-          div#allPumps.pumpButton All
+          div#hiddenPumpControls
+            div.pumpButton.singlePump(ng-repeat="pump in pumps.ingredients") {{$index}}
+            div#allPumps.pumpButton.small All
+          div#pumpControlToggle.pumpButton PU
           div.pumpButton(ng-click="addPump()") +
           div.pumpButton(ng-click="removePump()") -
         div.pumpContainer(ng-repeat="pump in pumps.ingredients")
@@ -30,7 +33,7 @@ block content
       div.drinkContainer(ng-repeat="drink in drinks | orderBy: 'name' | filter: containsIngredients", ng-click="selectDrink(drink)", style="opacity: 1.0; background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
         div.drinkName
           | {{drink.name}}
-        div.hiddenIngredientFloat(style="display: none")
+        div.hiddenIngredientFloat(style="display: none;")
           ul
             li.ingredientText(ng-repeat="ingredient in drink.ingredients")
               | {{ingredient.name}} 

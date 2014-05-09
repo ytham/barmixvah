@@ -7,15 +7,7 @@ function DrinkController($scope, $http) {
       { name: '', amount: 0 }
     ]
   };
-
-  // $scope.pumps = [
-  //   { label: 'pump0', ingredient: '' },
-  //   { label: 'pump1', ingredient: '' },
-  //   { label: 'pump2', ingredient: '' },
-  //   { label: 'pump3', ingredient: '' },
-  //   { label: 'pump4', ingredient: '' }
-  // ];
-
+  
   $scope.pumps = {
     label: "pumps",
     ingredients: [
@@ -24,17 +16,18 @@ function DrinkController($scope, $http) {
   };
 
   $scope.sizes = [
-    { size: '40', time: '2000' },
-    { size: '200', time: '10000' },
-    { size: '500', time: '25000' }
+    { size: '40', time: '4000' },
+    { size: '200', time: '20000' },
+    { size: '500', time: '50000' }
   ];
 
   $scope.selectedDrink;
-  $scope.drinkTime = 5000;
+  $scope.drinkTime = 10000;
+  $scope.pumpTime = 0;
 
   $scope.ingredientsList = [
     'Vodka', 'Rum', 'Whiskey', 'Tequila', 'Gin', 'Sake', 'Soju',
-    'Orange Juice', 'Apple Juice', 'Cranberry Juice', 'Pineapple Juice', 'Mango Juice',
+    'Orange Juice', 'Apple Juice', 'Cranberry Juice', 'Pineapple Juice', 'Mango Juice', 'Grapefruit Juice', 'Lime Juice',
     'Coke', 'Sprite', 'Ginger Ale', 'Root Beer', 'Dr. Pepper',
     'Blue Liqueur', 'Sweet & Sour', 'Triple Sec', 'Kaluha', 'Peach Schnapps', 'Midori Melon',
     'Champagne'
@@ -92,10 +85,7 @@ function DrinkController($scope, $http) {
     console.log($scope.pumps);
 
     $http.post('/updatepump.json', $scope.pumps).success(function (data) {
-      console.log("Success");
-      console.log(data);
       if (data) {
-        //$scope.pumps.ingredients[pumpNumber] = data.ingredients[pumpNumber];
         console.log($scope.pumps)
         console.log('----');
         console.log(data);
@@ -105,7 +95,6 @@ function DrinkController($scope, $http) {
 
   $scope.selectDrink = function (drink) {
     $scope.selectedDrink = drink;
-    console.log($scope.selectedDrink);
   };
 
   $scope.selectSize = function (size) {
@@ -179,7 +168,7 @@ function DrinkController($scope, $http) {
 
   $scope.editDrink = function (drink) {
     console.log(drink);
-    $http.post('/drink.json', drink).success(function (data) {
+    $http.post('/updatedrink.json', drink).success(function (data) {
       console.log("Success");
       console.log(data);
     });

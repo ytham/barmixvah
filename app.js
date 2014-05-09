@@ -19,7 +19,7 @@ var Drink = db.model('drinks', DrinkSchema);
 var PumpSchema = require('./models/Pump.js').PumpSchema;
 var Pump = db.model('pumps', PumpSchema);
 
-var robot = require('./public/javascripts/robot/backend.js');
+//var robot = require('./public/javascripts/robot/backend.js');
 
 var app = express();
 
@@ -60,6 +60,14 @@ io.sockets.on('connection', function (socket) {
   socket.on("Pump Cycle", function (ingredients) {
     robot.pump(ingredients);
     //console.log(ingredients);
+  });
+
+  socket.on("Start Pump", function (pump) {
+    robot.startPump(pump);
+  });
+
+  socket.on("Stop Pump", function (pump) {
+    robot.stopPump(pump);
   });
 
   socket.on("Start All Pumps", function () {

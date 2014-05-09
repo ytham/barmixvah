@@ -1,15 +1,17 @@
 var socket = io.connect();
-var $scope = angular.element($('#drinkScope')).scope();
+var $scope; 
 
 $(document).ready(function () {
+  $scope = angular.element($('#drinkScope')).scope();
+
   // Initialize
   $('#makeProgress').hide();
   $('.hiddenIngredientFloat').each(function () {
     $(this).hide();
   });
+  $('#hiddenPumpControls').hide();
   resizeContainers();
   
-
   // Sizing
   window.onresize = function () {
     resizeContainers();
@@ -20,6 +22,7 @@ $(document).ready(function () {
     resizeContainers();
   });
 
+  // Front end drink making
   $('#make').on('click touch', function () {
     if ($('#make').hasClass('noselection') === true) {
       alert('Please select a drink first.');
@@ -34,13 +37,16 @@ $(document).ready(function () {
     console.log('Making Drink');
     $('#make').addClass('disabled');
     $('#makeProgress').show();
-    $('#makeProgress').animate({
-      'margin-left': '250px'
-    }, parseInt($scope.drinkTime), 'linear', function () {
-      $('#make').removeClass('disabled');
-      $('#makeProgress').hide();
-      $('#makeProgress').css('margin-left', '-10px');
-    });
+    setTimeout(function () {
+      console.log("$scope.pumpTime: " + $scope.pumpTime);
+      $('#makeProgress').animate({
+        'margin-left': '250px'
+      }, parseInt($scope.pumpTime), 'linear', function () {
+        $('#make').removeClass('disabled');
+        $('#makeProgress').hide();
+        $('#makeProgress').css('margin-left', '-10px');
+      });
+    }, 200);
 
     // Start dispensing drink
     makeDrink($scope.selectedDrink.ingredients, $scope.pumps, parseInt($scope.drinkTime));
@@ -63,6 +69,31 @@ $(document).ready(function () {
     $(this).addClass('selected');
   });
 
+  var pumpControlsVisible = false;
+  $('#pumpControlToggle').on('click touch', function () {
+    if (pumpControlsVisible) {
+      pumpControlsVisible = false;
+      $('#hiddenPumpControls').hide();
+      $(this).text("PU");
+      $(this).css("background-color", "#FFEEEE");
+    } else {
+      pumpControlsVisible = true;
+      $('#hiddenPumpControls').show();
+      $(this).text("x");
+      $(this).css("background-color", "#DDFFDD");
+    }
+  });
+
+  $('.smallPumps').on('click touch', function () {
+    if ($(this).hasClass('active')) {
+      $(this).removeClass('active');
+      socket.emit('Stop Pump', "pump" + $(this).index());
+    } else {
+      $(this).addClass('active');
+      socket.emit('Start Pump', "pump" + $(this).index());
+    }
+  });
+    
   $('#allPumps').on('click touch', function () {
     if ($(this).hasClass('active')) {
       $(this).text('All');
@@ -93,16 +124,22 @@ function resizeContainers() {
 
 function makeDrink(ingredients, pumps, drinkSize) {
   // Find max amount and normalize to it
-  // if ($scope.checkDuplicates() === false) {
-  //   alert("Pump values must be unique");
-  //   return;
-  // }
+  if ($scope.checkDuplicates() === false) {
+    alert("Pump values must be unique");
+    return;
+  }
 
   var largestAmount = 0;
+  var amountTotal = 0;
+  var largestIndex = 0;
   for (var i in ingredients) {
+    amountTotal += Number(ingredients[i].amount);
     if (Number(ingredients[i].amount) > largestAmount) {
       largestAmount = ingredients[i].amount;
+      largestIndex = i;
     }
+
+    // Append pump numbers to the ingredients
     for (var j in pumps.ingredients) {
       console.log(pumps.ingredients[j].ingredient);
       if (ingredients[i].name === pumps.ingredients[j].ingredient) {
@@ -111,8 +148,26 @@ function makeDrink(ingredients, pumps, drinkSize) {
       }
     }
   }
+  
 
   // Normalize
+  var normFactor = drinkSize/amountTotal;
+
+  var totalPumpMilliseconds = parseInt(normFactor * largestAmount); 
+  console.log("totalPumpMilliseconds: " + totalPumpMilliseconds);
+  $scope.pumpTime = totalPumpMilliseconds;
+
+  ingredients[largestIndex].amount = parseInt(normFactor * Number(ingredients[largestIndex].amount));
+  ingredients[largestIndex].delay = 0;
+  for (var i in ingredients) {
+    if (i === largestIndex) continue;
+    ingredients[i].amount = parseInt(normFactor * Number(ingredients[i].amount));
+    ingredients[i].delay = ingredients[largestIndex].amount - ingredients[i].amount;
+    console.log("Ingr: " + ingredients[i].amount + ", Delay: " + ingredients[i].delay);
+  }
+  console.log(ingredients);
+  //socket.emit("Make Drink", ingredients);
+  /*
   var normFactor = 1000/largestAmount;
   var totalPumpMilliseconds = 0;
   for (var i in ingredients) {
@@ -121,6 +176,7 @@ function makeDrink(ingredients, pumps, drinkSize) {
     totalPumpMilliseconds += ingredients[i].amount;
   }
   console.log(totalPumpMilliseconds);
+
   var exactCycles = drinkSize / totalPumpMilliseconds;
   var fullCycles = Math.ceil(exactCycles);
   var remainder = exactCycles - (fullCycles-1);
@@ -143,7 +199,7 @@ function makeDrink(ingredients, pumps, drinkSize) {
       }
     }
 
-    socket.emit("Pump Cycle", ingredients);
+    //socket.emit("Pump Cycle", ingredients);
     console.log(ingredients);
     // console.log("Amount: " + ingredients[0].amount);
     // console.log("intrCount: " + intrCount);
@@ -151,4 +207,5 @@ function makeDrink(ingredients, pumps, drinkSize) {
     // console.log("--------");
     intrCount++;
   }, 1000);
+  */
 }

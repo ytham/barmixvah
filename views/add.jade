@@ -4,7 +4,6 @@ block head
   link(rel='stylesheet', href='/libs/bootstrap-css/css/bootstrap.css')
   link(rel='stylesheet', href='/stylesheets/overrides.css')
   script(type='text/javascript', src='/javascripts/controllers/DrinkController.js')
-  script(type='text/javascript', src='/javascripts/controllers/IngredientsController.js')
 
 block content
   div#addScope.row(ng-controller="DrinkController", ng-init="setDrinks(#{JSON.stringify(drinks)})")

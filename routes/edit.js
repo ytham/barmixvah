@@ -12,12 +12,17 @@ exports.show = function (Drink) {
 
 exports.updateDrink = function (Drink) {
   return function (req, res) {
-    Drink.findOneAndUpdate({ _id: req.body._id }, req.body, function (err, drink) {
-      if (drink) {
-        console.log("Update Drink");
-
-        res.send(drink);
-      }
+    Drink.findOneAndUpdate({ _id: req.body._id }, 
+      {
+        name: req.body.name,
+        image: req.body.image,
+        ingredients: req.body.ingredients
+      }, 
+      function (err, drink) {
+        if (drink) {
+          console.log("Update Drink");
+          res.send(drink);
+        }
     });
   };
 };

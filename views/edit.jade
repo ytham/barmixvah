@@ -24,13 +24,15 @@ block content
           input(value="{{drink.name}}", ng-model="drink.name")
         div.col-md-3
           input(value="{{drink.image}}", ng-model="drink.image")
-        div.col-md-1.text-right +
+        div.col-md-1.text-right 
+          a(ng-click="addNewIngredient()") +
         div.col-md-4
           div.row(ng-repeat="ingredient in drink.ingredients")
             div.col-md-7
               select.mixers(value="{{ingredient.name}}", ng-model="ingredient.name", ng-options="i for i in ingredientsList")
             div.col-md-4
               input.addForm.ingredient(value="{{ingredient.amount}}", ng-model="ingredient.amount", style="width: 100px;")
-            div.col-md-1 -
+            div.col-md-1 
+              a(ng-click="removeIngredient($index)") -
         div.col-md-1
           button.btn Save
