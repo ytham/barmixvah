@@ -4,7 +4,7 @@ exports.form = function (Drink) {
   return function (req, res) {
     Drink.find({}, function (err, drinks) {
       res.render('add', {
-        title: 'Add Drink',
+        title: 'Bar Mixvah: Add Drink',
         drinks: drinks
       });
     });

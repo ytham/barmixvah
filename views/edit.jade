@@ -14,10 +14,13 @@ block content
       div.col-md-8
         h1.title Edit Drinks
     div.row
-      div.col-md-3 Name
-      div.col-md-3 Filename
+      div.col-md-3 
+        b Name
+      div.col-md-3 
+        b Filename
       div.col-md-1
-      div.col-md-5 Ingredients
+      div.col-md-5 
+        b Ingredients
     div.row.editRow(ng-repeat="drink in drinks | orderBy: 'name'")
       form(ng-submit="editDrink(drink)")
         div.col-md-3 

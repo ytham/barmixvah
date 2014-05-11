@@ -22,30 +22,33 @@ board.on('ready', function () {
 });
 
 exports.pump = function (ingredients) {
+  console.log("Dispensing Drink");
   for (var i in ingredients) {
-    setTimeout(function () {  // Delay used to have a top-based mix
-      console.log(ingredients[i].pump);
-      pumpMilliseconds(exports.usePump(ingredients[i].pump), ingredients[i].amount);
-    }, ingredients[i].delay);
+    (function (i) {
+      setTimeout(function () {  // Delay implemented to have a top-biased mix
+        console.log(ingredients[i].pump);
+        pumpMilliseconds(exports.usePump(ingredients[i].pump), ingredients[i].amount);
+      }, ingredients[i].delay);
+    })(i);
   }
 };
-
+/*
 exports.startAllPumps = function () {
-  pump0.on();
-  pump1.on();
-  pump2.on();
-  pump3.on();
-  pump4.on();
+  exports.startPump("pump0");
+  exports.startPump("pump1");
+  exports.startPump("pump2");
+  exports.startPump("pump3");
+  exports.startPump("pump4");
 }
 
 exports.stopAllPumps = function () {
-  pump0.off();
-  pump1.off();
-  pump2.off();
-  pump3.off();
-  pump4.off();
+  exports.stopPump("pump0");
+  exports.stopPump("pump1");
+  exports.stopPump("pump2");
+  exports.stopPump("pump3");
+  exports.stopPump("pump4");
 }
-
+*/
 function pumpMilliseconds(pump, ms) {
   exports.startPump(pump);
   setTimeout(function () {
@@ -55,10 +58,12 @@ function pumpMilliseconds(pump, ms) {
 
 exports.startPump = function (pump) {
   pump.on();
+  console.log("Pump on");
 }
 
 exports.stopPump = function (pump) {
   pump.off();
+  console.log("Pump off");
 }
 
 exports.usePump = function (pump) {

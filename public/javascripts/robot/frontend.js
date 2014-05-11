@@ -75,34 +75,47 @@ $(document).ready(function () {
       pumpControlsVisible = false;
       $('#hiddenPumpControls').hide();
       $(this).text("PU");
-      $(this).css("background-color", "#FFEEEE");
+      $(this).removeClass("active");
     } else {
       pumpControlsVisible = true;
       $('#hiddenPumpControls').show();
       $(this).text("x");
-      $(this).css("background-color", "#DDFFDD");
+      $(this).addClass("active");
     }
   });
 
-  $('.smallPumps').on('click touch', function () {
+  $('.singlePump').on('click touch', function () {
+    var pump = "pump" + $(this).index();
+    console.log(pump);
     if ($(this).hasClass('active')) {
-      $(this).removeClass('active');
-      socket.emit('Stop Pump', "pump" + $(this).index());
+      stopOnePump($(this));
     } else {
-      $(this).addClass('active');
-      socket.emit('Start Pump', "pump" + $(this).index());
+      startOnePump($(this));
     }
   });
     
   $('#allPumps').on('click touch', function () {
+    var children = $('#hiddenPumpControls').children();
+    
     if ($(this).hasClass('active')) {
       $(this).text('All');
-      $(this).removeClass('active');
-      socket.emit('Stop All Pumps');
+      children.each(function () {
+        if ($(this).index() === children.length-1) {
+          $(this).text('All');
+          $(this).removeClass('active');
+        } else {
+          stopOnePump($(this))
+        }
+      });
     } else {
       $(this).text('Stop');
-      $(this).addClass('active');
-      socket.emit('Start All Pumps');
+      children.each(function () {
+        if ($(this).index() === children.length-1) { 
+          $(this).addClass('active');
+        } else {
+          startOnePump($(this));
+        }
+      });
     }
   });
 
@@ -148,7 +161,6 @@ function makeDrink(ingredients, pumps, drinkSize) {
       }
     }
   }
-  
 
   // Normalize
   var normFactor = drinkSize/amountTotal;
@@ -166,46 +178,17 @@ function makeDrink(ingredients, pumps, drinkSize) {
     console.log("Ingr: " + ingredients[i].amount + ", Delay: " + ingredients[i].delay);
   }
   console.log(ingredients);
-  //socket.emit("Make Drink", ingredients);
-  /*
-  var normFactor = 1000/largestAmount;
-  var totalPumpMilliseconds = 0;
-  for (var i in ingredients) {
-    ingredients[i].amount = parseInt(normFactor * Number(ingredients[i].amount));
-    console.log("Ing: " + ingredients[i].amount);
-    totalPumpMilliseconds += ingredients[i].amount;
-  }
-  console.log(totalPumpMilliseconds);
+  socket.emit("Make Drink", ingredients);
+}
 
-  var exactCycles = drinkSize / totalPumpMilliseconds;
-  var fullCycles = Math.ceil(exactCycles);
-  var remainder = exactCycles - (fullCycles-1);
+function startOnePump(self) {
+  self.text("Stop");
+  self.addClass('active');
+  socket.emit('Start Pump', "pump"+self.index());
+}
 
-  console.log(exactCycles);
-  console.log(fullCycles);
-  console.log(remainder);
-
-  // Dispatch command to robot
-  var intrCount = 0;
-  var interval = setInterval(function () {
-    if (intrCount >= fullCycles-1) {
-      if (intrCount > fullCycles-1) {
-        clearInterval(interval);
-        return;
-      }
-      console.log("Last Cycle");
-      for (var i in ingredients) {
-        ingredients[i].amount = parseInt(ingredients[i].amount * remainder);
-      }
-    }
-
-    //socket.emit("Pump Cycle", ingredients);
-    console.log(ingredients);
-    // console.log("Amount: " + ingredients[0].amount);
-    // console.log("intrCount: " + intrCount);
-    // console.log("fullCycles-1: " + (fullCycles-1));
-    // console.log("--------");
-    intrCount++;
-  }, 1000);
-  */
+function stopOnePump(self) {
+  self.text(self.index());
+  self.removeClass('active');
+  socket.emit('Stop Pump', "pump"+self.index());
 }

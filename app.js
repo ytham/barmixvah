@@ -19,7 +19,7 @@ var Drink = db.model('drinks', DrinkSchema);
 var PumpSchema = require('./models/Pump.js').PumpSchema;
 var Pump = db.model('pumps', PumpSchema);
 
-//var robot = require('./public/javascripts/robot/backend.js');
+var robot = require('./public/javascripts/robot/backend.js');
 
 var app = express();
 
@@ -57,9 +57,9 @@ var server = app.listen(3000, '0.0.0.0');
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
-  socket.on("Pump Cycle", function (ingredients) {
+  socket.on("Make Drink", function (ingredients) {
     robot.pump(ingredients);
-    //console.log(ingredients);
+    console.log(ingredients);
   });
 
   socket.on("Start Pump", function (pump) {
@@ -69,14 +69,14 @@ io.sockets.on('connection', function (socket) {
   socket.on("Stop Pump", function (pump) {
     robot.stopPump(pump);
   });
-
+/*
   socket.on("Start All Pumps", function () {
     robot.startAllPumps();
   });
 
   socket.on("Stop All Pumps", function () {
     robot.stopAllPumps();
-  });
+  });*/
 });
 
 /// error handlers

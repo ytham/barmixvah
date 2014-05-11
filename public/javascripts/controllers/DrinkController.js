@@ -7,7 +7,7 @@ function DrinkController($scope, $http) {
       { name: '', amount: 0 }
     ]
   };
-  
+
   $scope.pumps = {
     label: "pumps",
     ingredients: [
@@ -25,6 +25,8 @@ function DrinkController($scope, $http) {
   $scope.drinkTime = 10000;
   $scope.pumpTime = 0;
 
+  $scope.pumpDuplicates = 0;
+
   $scope.ingredientsList = [
     'Vodka', 'Rum', 'Whiskey', 'Tequila', 'Gin', 'Sake', 'Soju',
     'Orange Juice', 'Apple Juice', 'Cranberry Juice', 'Pineapple Juice', 'Mango Juice', 'Grapefruit Juice', 'Lime Juice',
@@ -40,14 +42,14 @@ function DrinkController($scope, $http) {
   $scope.setPumps = function (pumps) {
     console.log(pumps);
     $scope.pumps = pumps[0];
-  }
+  };
 
   $scope.getPumps = function () {
     $http.get('/pumps.json').success(function (data) {
       console.log(data);
       return data;
     });
-  }
+  };
 
   $scope.addPump = function () {
     var index = 0;
@@ -65,14 +67,14 @@ function DrinkController($scope, $http) {
       console.log("addPump Update Success");
       console.log($scope.pumps);
     });
-  }
+  };
 
   $scope.removePump = function () {
     $scope.pumps.ingredients.pop();
     $http.post('/updatepump.json', $scope.pumps).success(function (data) {
       console.log("removePump Update Success");
     });
-  }
+  };
 
   $scope.savePumpValue = function (pumpNumber) {
     var pumpName = "pump" + String(pumpNumber);
@@ -91,7 +93,7 @@ function DrinkController($scope, $http) {
         console.log(data);
       }
     });
-  }
+  };
 
   $scope.selectDrink = function (drink) {
     $scope.selectedDrink = drink;
@@ -105,7 +107,7 @@ function DrinkController($scope, $http) {
         return;
       }
     }
-  }
+  };
 
   $scope.addNewDrink = function () {
     $http.post('/drink.json', $scope.newDrink).success(function (data) {
@@ -129,17 +131,18 @@ function DrinkController($scope, $http) {
   $scope.addNewIngredient = function () {
     $scope.newDrink.ingredients.push({ name: '', amount: 0 });
     console.log('Added new ingredient');
-  }
+  };
 
   $scope.removeIngredient = function (index) { 
     $scope.newDrink.ingredients.splice(index, 1);
     console.log('Removed ingredient at index ' + index);
-  }
+  };
 
+  // Filter for drinks
   $scope.containsIngredients = function (drink) {
     var numIngredients = drink.ingredients.length;
     var numPumps = $scope.pumps.ingredients.length;
-    var ingredientsContained = 0;
+    var ingredientsContained = 0 - $scope.pumpDuplicates;
     for (var i = 0; i < numIngredients; i++) {
       for (var j = 0; j < numPumps; j++) {
         if (drink.ingredients[i].name === $scope.pumps.ingredients[j].ingredient) {
@@ -152,8 +155,9 @@ function DrinkController($scope, $http) {
       }
     }
     return false;
-  }
+  };
 
+  // Check if there are duplicate pump ingredients before dispensing drinks
   $scope.checkDuplicates = function () {
     var len = $scope.pumps.ingredients.length;
     for (var i = 0; i < len; i++) {
@@ -164,7 +168,22 @@ function DrinkController($scope, $http) {
       }
     }
     return true;
-  }
+  };
+
+  $scope.getNumDuplicates = function () {
+    var dupCount = 0;
+    var len = $scope.pumps.ingredients.length;
+    for (var i = 0; i < len; i++) {
+      for (var j = i+1; j < len; j++) {
+        if ($scope.pumps.ingredients[i].ingredient === $scope.pumps.ingredients[j].ingredient) {
+          dupCount++;
+        }
+      }
+    }
+    $scope.pumpDuplicates = dupCount;
+    console.log($scope.pumpDuplicates);
+    //return dupCount;
+  };
 
   $scope.editDrink = function (drink) {
     console.log(drink);
@@ -172,5 +191,5 @@ function DrinkController($scope, $http) {
       console.log("Success");
       console.log(data);
     });
-  }
+  };
 }
