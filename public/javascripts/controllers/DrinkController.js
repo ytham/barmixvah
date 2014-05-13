@@ -16,9 +16,9 @@ function DrinkController($scope, $http) {
   };
 
   $scope.sizes = [
-    { size: '40', time: '4000' },
-    { size: '200', time: '20000' },
-    { size: '500', time: '50000' }
+    { size: '40', time: '18000' },
+    { size: '200', time: '90000' },
+    { size: '400', time: '180000' }
   ];
 
   $scope.selectedDrink;
@@ -40,7 +40,6 @@ function DrinkController($scope, $http) {
   };
 
   $scope.setPumps = function (pumps) {
-    console.log(pumps);
     $scope.pumps = pumps[0];
   };
 
@@ -103,7 +102,6 @@ function DrinkController($scope, $http) {
     for (var i in $scope.sizes) {
       if ($scope.sizes[i].size === size) {
         $scope.drinkTime = $scope.sizes[i].time;
-        console.log($scope.drinkTime);
         return;
       }
     }
@@ -158,7 +156,7 @@ function DrinkController($scope, $http) {
   };
 
   // Check if there are duplicate pump ingredients before dispensing drinks
-  $scope.checkDuplicates = function () {
+  /*$scope.checkDuplicates = function () {
     var len = $scope.pumps.ingredients.length;
     for (var i = 0; i < len; i++) {
       for (var j = i+1; j < len; j++) {
@@ -168,9 +166,10 @@ function DrinkController($scope, $http) {
       }
     }
     return true;
-  };
+  };*/
 
-  $scope.getNumDuplicates = function () {
+
+  $scope.writeNumDuplicates = function () {
     var dupCount = 0;
     var len = $scope.pumps.ingredients.length;
     for (var i = 0; i < len; i++) {
@@ -181,7 +180,6 @@ function DrinkController($scope, $http) {
       }
     }
     $scope.pumpDuplicates = dupCount;
-    console.log($scope.pumpDuplicates);
     //return dupCount;
   };
 

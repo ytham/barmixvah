@@ -18,7 +18,6 @@ $(document).ready(function () {
   };
 
   $('.mixers').on('change click touch blur', function () {
-    console.log('mixers click');
     resizeContainers();
   });
 
@@ -38,7 +37,7 @@ $(document).ready(function () {
     $('#make').addClass('disabled');
     $('#makeProgress').show();
     setTimeout(function () {
-      console.log("$scope.pumpTime: " + $scope.pumpTime);
+      console.log("Time to Dispense Drink: " + $scope.pumpTime + "ms");
       $('#makeProgress').animate({
         'margin-left': '250px'
       }, parseInt($scope.pumpTime), 'linear', function () {
@@ -137,11 +136,12 @@ function resizeContainers() {
 
 function makeDrink(ingredients, pumps, drinkSize) {
   // Find max amount and normalize to it
-  if ($scope.checkDuplicates() === false) {
+  if ($scope.pumpDuplicates > 0) {
     alert("Pump values must be unique");
     return;
   }
 
+  // Get largest amount and index of that ingredient
   var largestAmount = 0;
   var amountTotal = 0;
   var largestIndex = 0;
@@ -154,7 +154,6 @@ function makeDrink(ingredients, pumps, drinkSize) {
 
     // Append pump numbers to the ingredients
     for (var j in pumps.ingredients) {
-      console.log(pumps.ingredients[j].ingredient);
       if (ingredients[i].name === pumps.ingredients[j].ingredient) {
         ingredients[i].pump = pumps.ingredients[j].label;
         continue;
@@ -166,18 +165,17 @@ function makeDrink(ingredients, pumps, drinkSize) {
   var normFactor = drinkSize/amountTotal;
 
   var totalPumpMilliseconds = parseInt(normFactor * largestAmount); 
-  console.log("totalPumpMilliseconds: " + totalPumpMilliseconds);
   $scope.pumpTime = totalPumpMilliseconds;
 
+  // Set the normalized amount and delay for each ingredient
   ingredients[largestIndex].amount = parseInt(normFactor * Number(ingredients[largestIndex].amount));
   ingredients[largestIndex].delay = 0;
   for (var i in ingredients) {
     if (i === largestIndex) continue;
     ingredients[i].amount = parseInt(normFactor * Number(ingredients[i].amount));
     ingredients[i].delay = ingredients[largestIndex].amount - ingredients[i].amount;
-    console.log("Ingr: " + ingredients[i].amount + ", Delay: " + ingredients[i].delay);
   }
-  console.log(ingredients);
+
   socket.emit("Make Drink", ingredients);
 }
 

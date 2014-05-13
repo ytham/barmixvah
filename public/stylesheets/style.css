@@ -13,6 +13,7 @@ a {
 /* Drink Controls */
 #drinks {
   text-align: center;
+  line-height: 0px;
 }
 
 #drinkScope {
@@ -25,6 +26,7 @@ a {
   height: 280px;
   width: 30%;
   margin: 15px;
+  line-height: 0.9em;
   background-color: #EEEEEE;
   background-position: center;
   background-size: cover;
@@ -42,6 +44,7 @@ a {
 .hiddenIngredientFloat {
   display: none;
   position: absolute;
+  text-align: left;
   z-index: 1;
   padding-right: 20px;
   padding-top: 10px;
@@ -72,7 +75,7 @@ a {
   padding: 10px;
   z-index: 1;
   color: #FFFFFF;
-  text-shadow: 3px 3px 6px #000000;
+  text-shadow: 2px 2px 4px #555555;
 }
 
 #selectedDrink {

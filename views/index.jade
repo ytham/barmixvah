@@ -8,7 +8,7 @@ block head
   script(type='text/javascript', src='/javascripts/robot/frontend.js')
 
 block content
-  div(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} ); setPumps( #{JSON.stringify(pumps)} ); getNumDuplicates()")
+  div(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} ); setPumps( #{JSON.stringify(pumps)} ); writeNumDuplicates()")
     div#launcher
       div#selectedDrink(style="background-image: url('/images/drinks/{{selectedDrink.image || \'no_image.jpg\'}}')") {{selectedDrink.name || "Select a Drink"}}
       div#selectedSize Choose a Size
@@ -29,7 +29,7 @@ block content
           div.pumpButton(ng-click="addPump()") +
           div.pumpButton(ng-click="removePump()") -
         div.pumpContainer(ng-repeat="pump in pumps.ingredients")
-          select.mixers(ng-change="savePumpValue($index); getNumDuplicates()", ng-model="pump.ingredient", ng-options="i for i in ingredientsList")
+          select.mixers(ng-change="savePumpValue($index); writeNumDuplicates()", ng-model="pump.ingredient", ng-options="i for i in ingredientsList")
       div#drinks.row
         div.drinkContainer(ng-repeat="drink in drinks | orderBy: 'name' | filter: containsIngredients", ng-click="selectDrink(drink)", style="opacity: 1.0; background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
           div.drinkName

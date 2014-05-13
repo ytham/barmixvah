@@ -63,11 +63,11 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on("Start Pump", function (pump) {
-    robot.startPump(pump);
+    robot.startPump(robot.usePump(pump));
   });
 
   socket.on("Stop Pump", function (pump) {
-    robot.stopPump(pump);
+    robot.stopPump(robot.usePump(pump));
   });
 /*
   socket.on("Start All Pumps", function () {
