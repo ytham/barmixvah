@@ -69,14 +69,6 @@ io.sockets.on('connection', function (socket) {
   socket.on("Stop Pump", function (pump) {
     robot.stopPump(robot.usePump(pump));
   });
-/*
-  socket.on("Start All Pumps", function () {
-    robot.startAllPumps();
-  });
-
-  socket.on("Stop All Pumps", function () {
-    robot.stopAllPumps();
-  });*/
 });
 
 /// error handlers

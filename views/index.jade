@@ -8,36 +8,44 @@ block head
   script(type='text/javascript', src='/javascripts/robot/frontend.js')
 
 block content
-  div(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} ); setPumps( #{JSON.stringify(pumps)} ); writeNumDuplicates()")
-    div#launcher
+  div#fullWidth(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} ); setPumps( #{JSON.stringify(pumps)} ); writeNumDuplicates()")
+    //-div#launcher
       div#selectedDrink(style="background-image: url('/images/drinks/{{selectedDrink.image || \'no_image.jpg\'}}')") {{selectedDrink.name || "Select a Drink"}}
-      div#selectedSize Choose a Size
+      
+    div#drinkScope.container-fluid
+      div#cover
+        h1.title Bar Mixvah
+        h2.subtitle Automated Drink Mixing Robot
+        div#pumps.row
+          div.floatingPumpButtons
+            div#plusMinus
+              div.pumpButton(ng-click="addPump()") +
+              div.pumpButton(ng-click="removePump()") -
+            div#hiddenPumpControls
+              div.pumpButton.singlePump(ng-repeat="pump in pumps.ingredients") {{$index}}
+              div#allPumps.pumpButton.small All
+            div#pumpControlToggle.pumpButton PUMP
+          div.pumpContainer(ng-repeat="pump in pumps.ingredients")
+            select.mixers(ng-change="savePumpValue($index); writeNumDuplicates()", ng-model="pump.ingredient", ng-options="i for i in ingredientsList")
+      div#drinks.row
+        h1.section Select a Drink
+        div.drinkContainer(ng-repeat="drink in drinks | orderBy: 'name' | filter: containsIngredients", ng-click="selectDrink(drink)")
+          div.drinkImage(class="{{selectedDrink}}", style="opacity: 1.0; background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
+            div.drinkName
+              | {{drink.name}}
+            div.hiddenIngredientFloat(style="display: none;")
+              ul
+                li.ingredientText(ng-repeat="ingredient in drink.ingredients")
+                  | {{ingredient.name}} 
+
+      div#selectSize 
+        h1.section Select a Size
         div#sizeSmall.drinkSize(ng-click="selectSize('40')") 40ml
         div#sizeMedium.drinkSize(ng-click="selectSize('200')") 200ml
         div#sizeLarge.drinkSize(ng-click="selectSize('500')")  500ml
-      div#make(class="{{selectedDrink.name ? '' : 'noselection'}}")
-        div#makeText MAKE
-        div#makeProgress
-    div#drinkScope.container-fluid
-      h1.title Bar Mixvah
-      div#pumps.row
-        div.floatingPumpButtons
-          div#hiddenPumpControls
-            div.pumpButton.singlePump(ng-repeat="pump in pumps.ingredients") {{$index}}
-            div#allPumps.pumpButton.small All
-          div#pumpControlToggle.pumpButton PU
-          div.pumpButton(ng-click="addPump()") +
-          div.pumpButton(ng-click="removePump()") -
-        div.pumpContainer(ng-repeat="pump in pumps.ingredients")
-          select.mixers(ng-change="savePumpValue($index); writeNumDuplicates()", ng-model="pump.ingredient", ng-options="i for i in ingredientsList")
-      div#drinks.row
-        div.drinkContainer(ng-repeat="drink in drinks | orderBy: 'name' | filter: containsIngredients", ng-click="selectDrink(drink)", style="opacity: 1.0; background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
-          div.drinkName
-            | {{drink.name}}
-          div.hiddenIngredientFloat(style="display: none;")
-            ul
-              li.ingredientText(ng-repeat="ingredient in drink.ingredients")
-                | {{ingredient.name}} 
 
+      div#make(class="{{selectedDrink.name ? '' : 'noselection'}}")
+        div#makeText.title MAKE
+        div#makeProgress
 block foot
   

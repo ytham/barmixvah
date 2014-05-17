@@ -2,11 +2,45 @@ a {
   color: #00B7FF;
 }
 
+#fullWidth {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Cover */
+
+#cover {
+  display: inline-block;
+  margin: 0px 0px 50px 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #f00;
+  background-position: center;
+  background-size: cover;
+  background-image: url('/images/citrus-sunset.jpg');
+}
+
 .title {
-  font-size: 120px;
+  font-size: 180px;
   text-align: center;
-  line-height: 90px;
+  line-height: 150px;
   font-weight: 100;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.subtitle {
+  font-size: 61px;
+  text-align: center;
+  line-height: 30px;
+  margin: 0px 0px 40px 0px;
+}
+
+.section {
+  font-size: 100px;
+  line-height: 100px;
 }
 
 
@@ -17,19 +51,26 @@ a {
 }
 
 #drinkScope {
-  margin-left: 280px;
-  padding: 0px 30px;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
 }
 
 .drinkContainer {
   display: inline-block;
   height: 280px;
-  width: 30%;
-  margin: 15px;
+  width: 31%;
+  margin: 10px;
   line-height: 0.9em;
-  background-color: #EEEEEE;
+  background-color: #FF0000;
+}
+
+.drinkImage {
+  display: inline-block;
   background-position: center;
   background-size: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .drinkName {
@@ -39,6 +80,7 @@ a {
   color: #FFFFFF;
   background-color: rgba(0,0,0,0.2);
   padding: 10px;
+  font-size: 1em;
 }
 
 .hiddenIngredientFloat {
@@ -46,6 +88,7 @@ a {
   position: absolute;
   text-align: left;
   z-index: 1;
+  line-height: 0.6em;
   padding-right: 20px;
   padding-top: 10px;
   background-color: rgba(0,0,0,0.2);
@@ -63,12 +106,18 @@ a {
   text-align: left !important;
 }
 
+.selectedDrink {
+  /*border: 10px solid #FF0000 !important;*/
+  -webkit-filter: brightness(125%);
+  opacity: 0.7 !important;
+}
+
 
 /* Sidebar */
 #launcher {
   display: inline-block;
   position: fixed;
-  width: 280px;
+  width: 240px;
   text-align: left;
   height: 100%;
   background-color: #e74c3c;
@@ -79,8 +128,8 @@ a {
 }
 
 #selectedDrink {
-  height: 260px;
-  width: 260px;
+  height: 220px;
+  width: 220px;
   background-position: center;
   background-size: cover;
   margin-bottom: 20px;
@@ -88,20 +137,22 @@ a {
   background-color: #c0392b;
 }
 
-#selectedSize {
-  height: 130px;
-  width: 260px;
-  margin-bottom: 20px;
+#selectSize {
+  /*background-color: #e74c3c;*/
+  width: 100%;
+  margin: 70px 0px;
+  padding: 0px;
   text-align: center;
 }
 
 .drinkSize {
   display: inline-block;
-  width: 80px;
-  height: 80px;
-  margin: 0px 2px;
-  font-size: 20px;
-  line-height: 80px;
+  width: 150px;
+  height: 150px;
+  margin: 0px 10px;
+  font-size: 48px;
+  line-height: 150px;
+  border-radius: 12px;
   vertical-align: middle;
   background-color: #c0392b;
 }
@@ -114,36 +165,42 @@ a {
   background-color: #888888 !important;
 }
 
-.selected {
+.selectedSize {
   background-color: #FFCCCC !important;
 }
 
 #make {
   display: inline-block;
   background-color: #c0392b;
-  padding: 10px;
-  width: 100%;
-  height: 100px;
+  text-align: left;
+  margin: 20px 0px 70px 0px;
+  padding: 0px;
+  width: 90%;
+  height: 200px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
 #makeProgress {
   display: inline-block;
-  width: 300px;
-  height: 100px;
-  margin-left: -10px;
-  margin-top: -10px;
+  width: 100%;
+  height: 200px;
+  margin: 0px;
   background-color: #888888;
 }
 
 #makeText {
   display: inline-block;
-  margin-left: -20px;
-  width: 100%;
+  margin: 0px;
+  width: 90%;
+  height: 200px;
+  line-height: 220px;
+  vertical-align: middle;;
   position: absolute;
   z-index: 3;
   text-align: center;
-  font-size: 80px;
+  /*font-size: 2.2em;*/
+  font-weight: 100;
   color: #FFFFFF;
 }
 
@@ -151,6 +208,7 @@ a {
 /* Pump Controls */
 #pumps {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .pumpContainer {
@@ -164,11 +222,11 @@ a {
   background-color: #FFDDDD;
   width: 100%;
   height: 42px;
-  margin-left: 7px;
-  font: 20px "Myriad Set", Helvetica, Arial, sans-serif;
-  padding-left: 20px;
-  border: 2px solid #e74c3c;
-  border-radius: 0;
+  margin: 5px;
+  font: 16px "AvenirNext-Regular", Helvetica, Arial, sans-serif;
+  padding-left: 10px;
+  border: 0px solid #e74c3c;
+  border-radius: 5px;
   -webkit-appearance: none;
 }
 
@@ -191,6 +249,13 @@ a {
   height: 50px;
   top: 50px;
   right: 0px;
+}
+
+#plusMinus {
+  display: inline-block;
+  position: absolute;
+  margin-top: 0px;
+  margin-left: -100px;
 }
 
 #allPumps {
@@ -235,3 +300,10 @@ a {
   background-color: #FFEEEE;
 }
 
+
+/* Footer */
+.footerText {
+  font-size: 0.7em;
+  color: #777777;
+  text-align: center;
+}

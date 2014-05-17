@@ -1,7 +1,7 @@
-var five = require('johnny-five');
+//var five = require('johnny-five');
 
 var board, pump0, pump1, pump2, pump3, pump4;
-
+/*
 board = new five.Board();
 board.on('ready', function () {
   // Counting down pins because that's the orientation 
@@ -19,8 +19,10 @@ board.on('ready', function () {
     p3: pump3,
     p4: pump4
   });
-});
 
+  console.log("\033[31m[MSG] Bar Mixvah Ready\033[91m");
+});
+*/
 exports.pump = function (ingredients) {
   console.log("Dispensing Drink");
   for (var i in ingredients) {
@@ -32,23 +34,7 @@ exports.pump = function (ingredients) {
     })(i);
   }
 };
-/*
-exports.startAllPumps = function () {
-  exports.startPump("pump0");
-  exports.startPump("pump1");
-  exports.startPump("pump2");
-  exports.startPump("pump3");
-  exports.startPump("pump4");
-}
 
-exports.stopAllPumps = function () {
-  exports.stopPump("pump0");
-  exports.stopPump("pump1");
-  exports.stopPump("pump2");
-  exports.stopPump("pump3");
-  exports.stopPump("pump4");
-}
-*/
 function pumpMilliseconds(pump, ms) {
   exports.startPump(pump);
   setTimeout(function () {
@@ -57,13 +43,13 @@ function pumpMilliseconds(pump, ms) {
 }
 
 exports.startPump = function (pump) {
-  pump.on();
-  console.log("Pump on");
+  //console.log("\033[31m[PUMP] Starting " + pump + "\033[91m");
+  //pump.on();
 }
 
 exports.stopPump = function (pump) {
-  pump.off();
-  console.log("Pump off");
+  //console.log("\033[31m[PUMP] Stopping " + pump + "\033[91m");
+  //pump.off();
 }
 
 exports.usePump = function (pump) {

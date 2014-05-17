@@ -95,7 +95,15 @@ function DrinkController($scope, $http) {
   };
 
   $scope.selectDrink = function (drink) {
+    //console.log('select', arguments, this);
     $scope.selectedDrink = drink;
+
+    if ($scope.lastSelected) {
+      $scope.lastSelected.selectedDrink = '';
+    }
+
+    this.selectedDrink = 'selectedDrink';
+    $scope.lastSelected = this;
   };
 
   $scope.selectSize = function (size) {

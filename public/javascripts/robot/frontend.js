@@ -5,15 +5,13 @@ $(document).ready(function () {
   $scope = angular.element($('#drinkScope')).scope();
 
   // Initialize
-  $('#makeProgress').hide();
-  $('.hiddenIngredientFloat').each(function () {
-    $(this).hide();
-  });
-  $('#hiddenPumpControls').hide();
+  resizeCover($(window));
+  hideControls();
   resizeContainers();
   
   // Sizing
   window.onresize = function () {
+    resizeCover($(window));
     resizeContainers();
   };
 
@@ -39,7 +37,7 @@ $(document).ready(function () {
     setTimeout(function () {
       console.log("Time to Dispense Drink: " + $scope.pumpTime + "ms");
       $('#makeProgress').animate({
-        'margin-left': '250px'
+        'margin-left': String($(window).width()) + 'px'
       }, parseInt($scope.pumpTime), 'linear', function () {
         $('#make').removeClass('disabled');
         $('#makeProgress').hide();
@@ -50,22 +48,22 @@ $(document).ready(function () {
     // Start dispensing drink
     makeDrink($scope.selectedDrink.ingredients, $scope.pumps, parseInt($scope.drinkTime));
   });
-
-  $('.drinkContainer').mouseover(function () {
-    $(this).children('.hiddenIngredientFloat').show();
-    $(this).fadeTo(0, 0.8);
+  
+  $('.drinkName').mouseover(function () {
+    $(this).parent().parent().children('.hiddenIngredientFloat').show();
+    $(this).parent().parent().fadeTo(0, 0.8);
   });
 
-  $('.drinkContainer').mouseout(function () {
-    $(this).children('.hiddenIngredientFloat').hide();
-    $(this).fadeTo(0, 1.0);
+  $('.drinkName').mouseout(function () {
+    $(this).parent().parent().children('.hiddenIngredientFloat').hide();
+    $(this).parent().parent().fadeTo(0, 1.0);
   });
-
+  
   $('.drinkSize').on('click touch', function () {
     $('.drinkSize').each(function () {
-      $(this).removeClass('selected');
+      $(this).removeClass('selectedSize');
     });
-    $(this).addClass('selected');
+    $(this).addClass('selectedSize');
   });
 
   var pumpControlsVisible = false;
@@ -73,7 +71,7 @@ $(document).ready(function () {
     if (pumpControlsVisible) {
       pumpControlsVisible = false;
       $('#hiddenPumpControls').hide();
-      $(this).text("PU");
+      $(this).text("PUMP");
       $(this).removeClass("active");
     } else {
       pumpControlsVisible = true;
@@ -123,14 +121,36 @@ $(document).ready(function () {
   // }, 500);
 });
 
+function resizeCover(view) {
+  $('#cover').height(view.height());
+  $('#cover').css('padding-top', String(view.height()/2-140) + "px")
+}
+
+function hideControls() {
+  $('#makeProgress').hide();
+  $('.hiddenIngredientFloat').each(function () {
+    $(this).hide();
+  });
+  $('#hiddenPumpControls').hide();
+  $('#plusMinus').hide();
+}
+
 function resizeContainers() {
   $('.drinkContainer').each(function () {
     var size = $(this).width();
     $(this).height(size);
 
-    var label = $(this).children('.drinkName');
+    var label = $(this).children('.drinkImage').children('.drinkName');
     var margin = size - label.height() - 20;
     label.css('margin-top', margin);
+  });
+}
+
+function animateBackground() {
+  $('#make').animate({backgroundColor:'#FFFFFF'}, 1000, 'swing', function () {
+    $('#make').animate({backgroundColor: '#c0392b'}, 1000, 'swing', function () {
+      animateBackground();
+    });
   });
 }
 
