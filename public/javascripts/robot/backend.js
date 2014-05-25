@@ -1,7 +1,7 @@
-//var five = require('johnny-five');
+var five = require('johnny-five');
 
 var board, pump0, pump1, pump2, pump3, pump4;
-/*
+
 board = new five.Board();
 board.on('ready', function () {
   // Counting down pins because that's the orientation 
@@ -22,14 +22,13 @@ board.on('ready', function () {
 
   console.log("\033[31m[MSG] Bar Mixvah Ready\033[91m");
 });
-*/
+
 exports.pump = function (ingredients) {
   console.log("Dispensing Drink");
   for (var i in ingredients) {
     (function (i) {
       setTimeout(function () {  // Delay implemented to have a top-biased mix
-        console.log(ingredients[i].pump);
-        pumpMilliseconds(exports.usePump(ingredients[i].pump), ingredients[i].amount);
+        pumpMilliseconds(ingredients[i].pump, ingredients[i].amount);
       }, ingredients[i].delay);
     })(i);
   }
@@ -43,13 +42,15 @@ function pumpMilliseconds(pump, ms) {
 }
 
 exports.startPump = function (pump) {
-  //console.log("\033[31m[PUMP] Starting " + pump + "\033[91m");
-  //pump.on();
+  console.log("\033[32m[PUMP] Starting " + pump + "\033[91m");
+  var p = exports.usePump(pump);
+  p.on();
 }
 
 exports.stopPump = function (pump) {
-  //console.log("\033[31m[PUMP] Stopping " + pump + "\033[91m");
-  //pump.off();
+  console.log("\033[32m[PUMP] Stopping " + pump + "\033[91m");
+  var p = exports.usePump(pump);
+  p.off();
 }
 
 exports.usePump = function (pump) {

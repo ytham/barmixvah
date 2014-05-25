@@ -38,13 +38,12 @@ app.get('/', routes.index(Drink, Pump));
 app.get('/add', add.form(Drink));
 app.get('/edit', edit.show(Drink));
 //app.use('/users', users);
-app.post('/updatepump.json', routes.updatePump(Pump));
 
+app.post('/updatepump.json', routes.updatePump(Pump));
 app.post('/drink.json', add.addDrink(Drink));
 app.post('/pump.json', add.addPump(Pump));
 app.post('/updatedrink.json', edit.updateDrink(Drink));
 
-//app.put('/pump.json', routes.updatePump(Pump));
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -52,6 +51,7 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
 
 var server = app.listen(3000, '0.0.0.0');
 var io = require('socket.io').listen(server);
@@ -63,11 +63,11 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on("Start Pump", function (pump) {
-    robot.startPump(robot.usePump(pump));
+    robot.startPump(pump);
   });
 
   socket.on("Stop Pump", function (pump) {
-    robot.stopPump(robot.usePump(pump));
+    robot.stopPump(pump);
   });
 });
 

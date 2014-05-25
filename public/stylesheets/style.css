@@ -34,8 +34,8 @@ a {
 .subtitle {
   font-size: 61px;
   text-align: center;
-  line-height: 30px;
-  margin: 0px 0px 40px 0px;
+  line-height: 50px;
+  margin: -10px 0px 30px 0px;
 }
 
 .section {
@@ -84,7 +84,6 @@ a {
 }
 
 .hiddenIngredientFloat {
-  display: none;
   position: absolute;
   text-align: left;
   z-index: 1;
@@ -92,6 +91,14 @@ a {
   padding-right: 20px;
   padding-top: 10px;
   background-color: rgba(0,0,0,0.2);
+}
+
+.hiddenIngredients {
+  display: none;
+}
+
+.selectedHiddenIngredient {
+  display: inline-block !important;
 }
 
 .ingredientText {
