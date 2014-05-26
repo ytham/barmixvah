@@ -30,13 +30,14 @@ block content
       div#drinks.row
         h1.section Select a Drink
         div.drinkContainer(ng-repeat="drink in drinks | orderBy: 'name' | filter: containsIngredients", ng-click="selectDrink(drink)")
+          div.hiddenIngredientFloat(class="hiddenIngredients {{selectedDrink}}")
+            ul
+              li.ingredientText(ng-repeat="ingredient in drink.ingredients")
+                | {{ingredient.name}} 
           div.drinkImage(class="{{selectedDrink}}", style="opacity: 1.0; background-image: url('/images/drinks/{{drink.image || \'no_image.jpg\'}}')")
             div.drinkName
               | {{drink.name}}
-            div.hiddenIngredientFloat(class="hiddenIngredients {{selectedDrink}}")
-              ul
-                li.ingredientText(ng-repeat="ingredient in drink.ingredients")
-                  | {{ingredient.name}} 
+          
 
       div#selectSize 
         h1.section Select a Size

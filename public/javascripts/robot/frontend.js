@@ -49,15 +49,15 @@ $(document).ready(function () {
     makeDrink($scope.selectedDrink.ingredients, $scope.pumps, parseInt($scope.drinkTime));
   });
   
-  $('.drinkName').mouseover(function () {
-    $(this).parent().parent().children('.hiddenIngredientFloat').show();
-    $(this).parent().parent().fadeTo(0, 0.8);
-  });
+  // $('.drinkName').mouseover(function () {
+  //   $(this).parent().parent().children('.hiddenIngredientFloat').show();
+  //   $(this).parent().parent().fadeTo(0, 0.8);
+  // });
 
-  $('.drinkName').mouseout(function () {
-    $(this).parent().parent().children('.hiddenIngredientFloat').hide();
-    $(this).parent().parent().fadeTo(0, 1.0);
-  });
+  // $('.drinkName').mouseout(function () {
+  //   $(this).parent().parent().children('.hiddenIngredientFloat').hide();
+  //   $(this).parent().parent().fadeTo(0, 1.0);
+  // });
   
   $('.drinkSize').on('click touch', function () {
     $('.drinkSize').each(function () {
@@ -128,9 +128,9 @@ function resizeCover(view) {
 
 function hideControls() {
   $('#makeProgress').hide();
-  $('.hiddenIngredientFloat').each(function () {
-    $(this).hide();
-  });
+  // $('.hiddenIngredientFloat').each(function () {
+  //   $(this).hide();
+  // });
   $('#hiddenPumpControls').hide();
   $('#plusMinus').hide();
 }
