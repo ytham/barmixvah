@@ -76,19 +76,8 @@ function DrinkController($scope, $http) {
   };
 
   $scope.savePumpValue = function (pumpNumber) {
-    var pumpName = "pump" + String(pumpNumber);
-    var pumpData = { 
-      label: pumpName,
-      ingredient: $scope.pumps.ingredients[pumpNumber]
-    };
-    console.log('savePumpValue');
-    console.log(pumpNumber);
-    console.log($scope.pumps);
-
     $http.post('/updatepump.json', $scope.pumps).success(function (data) {
       if (data) {
-        console.log($scope.pumps)
-        console.log('----');
         console.log(data);
       }
     });

@@ -155,7 +155,7 @@ function animateBackground() {
 }
 
 function makeDrink(ingredients, pumps, drinkSize) {
-  // Find max amount and normalize to it
+  // Check that there are no duplicate pumps ingredients
   if ($scope.pumpDuplicates > 0) {
     alert("Pump values must be unique");
     return;

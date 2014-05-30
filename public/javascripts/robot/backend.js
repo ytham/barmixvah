@@ -1,6 +1,6 @@
-var five = require('johnny-five');
-
 var board, pump0, pump1, pump2, pump3, pump4;
+/*
+var five = require('johnny-five');
 
 board = new five.Board();
 board.on('ready', function () {
@@ -22,7 +22,7 @@ board.on('ready', function () {
 
   console.log("\033[31m[MSG] Bar Mixvah Ready\033[91m");
 });
-
+*/
 exports.pump = function (ingredients) {
   console.log("Dispensing Drink");
   for (var i in ingredients) {
