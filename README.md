@@ -22,7 +22,10 @@ Usage
 
 The app connects to your local mongo database on startup.  You should have mongo running first, or it will throw an error.  The web interface is located at http://localhost:3000 (or if you are connecting via a different device, you can point that device to http://x.x.x.x:3000, the IP address of the machine that the node.js app is running on).
 
-Pump controls are accessed in the top-right corner by clicking the PUMP button.  You can add pumps and select ingredients for each of those pumps.  
+You'll likely want to import example drinks collection that I made.  It doesn't contain drinks for all combos, but it'll have a few examples.  You can add more by following the information at the bottom of this section.  Import the drinks collection with this command:
+    mongoimport --db barmixvah --collection drinks --file drinks.json
+
+Pump controls are accessed in the top-right corner by clicking the PUMP button.  You can add/remove pumps with the (+) and (-) buttons and select ingredients for each of those pumps as they appear in the center of the screen.
 
 Drinks can be added by pointing your browser to localhost:3000/add, and can be edited at localhost:3000/edit.  Drink images can be added to /public/image/drinks/.
 

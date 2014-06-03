@@ -39,12 +39,20 @@ function DrinkController($scope, $http) {
     $scope.drinks = drinks;
   };
 
+  $scope.initializePumps = function () {
+    console.log('ran');
+    $http.post('/initializePumps').success(function (data) {
+      console.log(data);
+      return data;
+    });
+  };
+
   $scope.setPumps = function (pumps) {
     $scope.pumps = pumps[0];
   };
 
   $scope.getPumps = function () {
-    $http.get('/pumps.json').success(function (data) {
+    $http.get('/pump.json').success(function (data) {
       console.log(data);
       return data;
     });
@@ -52,7 +60,7 @@ function DrinkController($scope, $http) {
 
   $scope.addPump = function () {
     var index = 0;
-    if (typeof $scope.pumps.label === 'undefined') {
+    if (typeof $scope.pumps === 'undefined') {
       $scope.pumps = {
         label: "pumps",
         ingredients: [ { label: "pump0", ingredient: "" } ]

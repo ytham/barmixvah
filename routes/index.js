@@ -23,9 +23,12 @@ exports.updatePump = function (Pump) {
         console.log(pump);
         console.log('====');
         console.log(err);
+        console.log('request body');
+        console.log(req.body);
         if (pump == null) {
           Pump.create(req.body);
           pump = req.body;
+          console.log('pump eq null');
         }
         res.send(pump);
     });

@@ -8,10 +8,7 @@ block head
   script(type='text/javascript', src='/javascripts/robot/frontend.js')
 
 block content
-  div#fullWidth(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} ); setPumps( #{JSON.stringify(pumps)} ); writeNumDuplicates()")
-    //-div#launcher
-      div#selectedDrink(style="background-image: url('/images/drinks/{{selectedDrink.image || \'no_image.jpg\'}}')") {{selectedDrink.name || "Select a Drink"}}
-      
+  div#fullWidth(ng-controller="DrinkController", ng-init="setDrinks( #{JSON.stringify(drinks)} ); setPumps( #{JSON.stringify(pumps)} ); writeNumDuplicates()") 
     div#drinkScope.container-fluid
       div#cover
         h1.title Bar Mixvah

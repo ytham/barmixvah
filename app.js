@@ -11,7 +11,7 @@ var add = require('./routes/add');
 var edit = require('./routes/edit');
 
 var mongoose = require('mongoose');
-var db = mongoose.createConnection('localhost', 'bartagnan');
+var db = mongoose.createConnection('localhost', 'barmixvah');
 
 var DrinkSchema = require('./models/Drink.js').DrinkSchema;
 var Drink = db.model('drinks', DrinkSchema);
@@ -68,6 +68,19 @@ io.sockets.on('connection', function (socket) {
 
   socket.on("Stop Pump", function (pump) {
     robot.stopPump(pump);
+  });
+});
+
+
+db.once('open', function () {
+  Pump.findOne({}, function (err, pump) {
+    if (pump == null) {
+      var pumps = {
+        label: "pumps",
+        ingredients: [ { label: "pump0", ingredient: "" } ]
+      };
+      Pump.create(pumps);
+    } 
   });
 });
 
