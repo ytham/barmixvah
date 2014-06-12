@@ -7,9 +7,11 @@ Bar Mixvah is an automated drink mixing robot that is controlled via a beautiful
 Requirements
 ------------
 
-This is not magic.  A not-so-insignificant amount of hardware, soldering, and wiring is required for this to work.  Follow along with the tutorial on my website here:
-http://yujiangtham.com/2014/05/25/build-your-very-own-drink-mixing-robot-part-1/
+This is not magic.  A not-so-insignificant amount of hardware, soldering, and wiring is required for this to work.  Follow along with the tutorials on my website here:
 
+http://yujiangtham.com/2014/05/25/build-your-very-own-drink-mixing-robot-part-1/
+http://yujiangtham.com/2014/05/30/build-your-very-own-drink-mixing-robot-part-2/
+http://yujiangtham.com/2014/06/12/build-your-very-own-drink-mixing-robot-part-3/
 
 Caveats
 -------
