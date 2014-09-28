@@ -1,36 +1,9 @@
-var controller="raspi", pump0, pump1, pump2, pump3, pump4;
+var board, pump0, pump1, pump2, pump3, pump4;
 
-if (controller == "raspi") {
-  var raspi = require('raspi-io'),
-      five = require('johnny-five'),
-      board = new five.Board({
-        io: new raspi()
-      });
+var five = require('johnny-five');
 
-  board.on('ready', function () {
-    pump0 = new five.Led(23);
-    pump1 = new five.Led(21);
-    pump2 = new five.Led(19);
-    pump3 = new five.Led(15);
-    pump4 = new five.Led(13);
-    
-    board.repl.inject({
-      p0: pump0,
-      p1: pump1,
-      p2: pump2,
-      p3: pump3,
-      p4: pump4
-    });
-
-    console.log("\033[31m[MSG] Bar Mixvah on RaspberryPi Ready\033[91m");
-  });
-}
-
-if(controller == "arduino") {
-  var five = require('johnny-five');
-  board = new five.Board();
-
-  board.on('ready', function () {
+board = new five.Board();
+board.on('ready', function () {
   // Counting down pins because that's the orientation 
   // that my Arduino happens to be in
   pump0 = new five.Led(7);
@@ -47,11 +20,8 @@ if(controller == "arduino") {
     p4: pump4
   });
 
-  console.log("\033[31m[MSG] Bar Mixvah on Arduino Ready\033[91m");
-  });
-}
-
-
+  console.log("\033[31m[MSG] Bar Mixvah Ready\033[91m");
+});
 
 exports.pump = function (ingredients) {
   console.log("Dispensing Drink");
