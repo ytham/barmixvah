@@ -150,7 +150,7 @@ function DrinkController($scope, $http) {
       for (var j = 0; j < numPumps; j++) {
         if (drink.ingredients[i].name === $scope.pumps.ingredients[j].ingredient) {
           ingredientsContained++;
-          if (ingredientsContained >= numIngredients || ingredientsContained >= numPumps) {
+          if (ingredientsContained >= numIngredients && ingredientsContained <= numPumps) {
             return true;
           }
           continue;
