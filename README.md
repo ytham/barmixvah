@@ -1,6 +1,10 @@
 Bar Mixvah
 ----------
 
+***THIS FORK IS BASED ON Yu Jiang Tham's [Barmixvah](https://github.com/ytham/barmixvah)***
+
+The client and server code have a few bugs which are fixed in this fork.
+
 Bar Mixvah is an automated drink mixing robot that is controlled via a beautiful web interface.  Users can select a drink, select a size, and have their drink made for them in front of their eyes!
 
 
@@ -22,14 +26,38 @@ A few parts of the interface are incomplete or not very well-implemented at the 
 Usage
 -----
 
-The app connects to your local mongo database on startup.  You should have mongo running first, or it will throw an error.  The web interface is located at http://localhost:3000 (or if you are connecting via a different device, you can point that device to http://x.x.x.x:3000, the IP address of the machine that the node.js app is running on).
+First change into whichever directory you develop in and clone the repository
+```shell
+$ cd the-directory-you-want-to-work-in
+$ git clone https://github.com/marcusmolchany/barmixvah.git
+```
+
+Run npm install for dependencies
+```shell
+$ npm install
+```
+
+The app connects to your local mongo database on startup.  You should have mongo running first, or it will throw an error. To run local mongo use this command:
+```shell
+$ mongod
+```
 
 You'll likely want to import example drinks collection that I made.  It doesn't contain drinks for all combos, but it'll have a few examples.  You can add more by following the information at the bottom of this section.  Import the drinks collection with this command:
-    mongoimport --db barmixvah --collection drinks --file drinks.json
+```shell
+$ mongoimport --db barmixvah --collection drinks --file drinks.json
+```
+
+The web interface is located at [http://localhost:3000](http://localhost:3000) (or if you are connecting via a different device, you can point that device to http://x.x.x.x:3000, the IP address of the machine that the node.js app is running on). To run the web server use this command:
+```shell
+$ npm start
+```
+
+Navigate to [http://localhost:3000](http://localhost:3000) and you should see something that resembles this:
+<img width="889" alt="screen shot 2016-02-29 at 4 04 57 pm" src="https://cloud.githubusercontent.com/assets/2160046/13409044/e6b30848-defe-11e5-9782-7dc891f4df6b.png">
 
 Pump controls are accessed in the top-right corner by clicking the PUMP button.  You can add/remove pumps with the (+) and (-) buttons and select ingredients for each of those pumps as they appear in the center of the screen.
 
 Drinks can be added by pointing your browser to localhost:3000/add, and can be edited at localhost:3000/edit.  Drink images can be added to /public/image/drinks/.
 
 
-Yu Jiang Tham, 2014
+Yu Jiang Tham, 2014 (original)
