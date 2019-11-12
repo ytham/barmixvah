@@ -16,7 +16,7 @@
     "debug": "~0.7.4",
     "jade": "~1.3.0",
     "socket.io": "~0.9.16",
-    "mongoose": "~3.8.8"
+    "mongoose": "~5.7.10"
   },
   "license": "MIT"
 }
